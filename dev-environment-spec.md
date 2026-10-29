@@ -24,7 +24,7 @@
 
 | 维度 | 说明 |
 | --- | --- |
-| **一体化平台** | 代码托管（SCM）、CI/CD、Issue 跟踪、Code Review、Container Registry、Wiki 全部内建，避免工具链碎片化。 |
+| **一体化平台** | 代码托管（SCM）、CI/CD、Issue 跟踪、Code Review、Wiki 全部内建，避免工具链碎片化。 |
 | **原生 CI/CD** | GitLab CI 与仓库深度集成，Pipeline 即代码（`.gitlab-ci.yml`），无需另接 Jenkins 等外部系统。 |
 | **强代码评审** | Merge Request（MR）支持多轮评审、行内评论、Approval 规则与 Required Reviewers。 |
 | **精细权限模型** | 通过 Group / Subgroup 实现层级权限继承，角色从 Guest 到 Owner 五档可控。 |
@@ -48,9 +48,9 @@
 采用「**组织 → 部门 → 团队/产品线 → 项目**」四级结构，保证路径唯一、语义清晰、便于权限继承。
 
 ### 2.1 命名规则（通用约束）
+- 组织和部门采用公司内部称谓
 
-- 全部使用**小写字母 + 连字符 `-`**，不使用空格、下划线、中文、大写。
-- 使用 **kebab-case**（如 `payment-service`）。
+- 统一使用 **kebab-case**：全部小写字母、数字、连字符 `-`（如 `payment-service`），不使用空格、下划线、中文、大写。
 - 名称需具业务语义，避免缩写歧义。
 - 路径（path）与显示名（name）保持一致风格。
 
@@ -60,38 +60,33 @@
 <org>                          # Group: 公司/组织顶层
 └── <domain>                   # Subgroup: 业务域/部门，如 backend / frontend / platform
     └── <team-or-product>      # Subgroup: 团队或产品线
-        └── <project>         # Project: 具体仓库
+        └── <project>          # Project: 具体仓库
 ```
 
-**示例**：
+### 2.3 命名方案
 
 ```
-acme
-└── backend
-    ├── payments
-    │   ├── payment-gateway      # 项目
-    │   └── ledger-service       # 项目
-    └── identity
-        └── auth-service        # 项目
+DeepArray                  # Group: 公司
+├── eda-team               # Subgroup: 业务部门
+│   ├── fusion             # Subgroup: 产品线
+│   │   ├── ace-core       # Project
+│   │   ├── ace-agent      # Project
+│   │   ├── ace-ui         # Project
+│   │   ├── ace-tests      # Project
+│   │   └── ace-build      # Project
+│   └── next-fusion        # Subgroup: 产品线
+│        ....
+└── rc-team                # Subgroup: 业务部门
+    ├── fusion             # Subgroup: 产品线
+    │   ├── core           # 项目
+    │   ├── agent          # 项目
+    │   ├── ui             # 项目
+    │   ├── ace-tests      # 项目
+    │   └── ace-build      # 项目  
+    └── fusion-next-generation
+
 ```
 
-### 2.3 命名约定速查
-
-| 层级 | 命名模式 | 示例 |
-| --- | --- | --- |
-| Group | `<org>` | `acme` |
-| Subgroup L1 | `<domain>` | `backend`, `frontend`, `data` |
-| Subgroup L2 | `<team-or-product>` | `payments`, `identity` |
-| Project | `<service-or-module>` | `payment-gateway`, `auth-service` |
-
-### 2.4 仓库类型约定
-
-- **Library**：`-lib` 后缀（如 `crypto-lib`）。
-- **Service**：`-service` 后缀。
-- **Frontend App**：`-web` 或 `-app` 后缀。
-- **Infra / Config**：放在 `platform/infra` 下。
-
----
 
 ## 3. Branch 命名规范与 Commit Message 规则
 
